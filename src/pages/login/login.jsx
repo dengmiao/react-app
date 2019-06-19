@@ -7,7 +7,7 @@ import memoryUtils from '../../utils/memoryUtils'
 import storageUtils from '../../utils/storageUtils'
 
 import './login.less'
-import logo from './images/logo.png'
+import logo from '../../assets/images/logo.svg'
 
 
 // 在import之后
