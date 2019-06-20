@@ -125,7 +125,8 @@ class LeftNav extends Component {
                     defaultOpenKeys={[openKey]}
                     mode="inline"
                     theme="dark"
-                    inlineCollapsed={this.state.collapsed}>
+                    //inlineCollapsed={this.state.collapsed}
+                >
                     {
                         this.menuNodes
                     }
