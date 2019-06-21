@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import {
     Form,
     Select,
@@ -17,18 +18,32 @@ class AddForm extends Component {
         this.state = {}
     }
 
+    static propTypes = {
+        setForm: PropTypes.func.isRequired,
+        categoryList: PropTypes.array.isRequired, // 一级分类数组
+        parentId: PropTypes.string.isRequired, // 父分类id
+    }
+
+    componentWillMount() {
+        // 将form对象通过setForm()传递父组件
+        this.props.setForm(this.props.form)
+    }
+
     render() {
+        const { categoryList, parentId } = this.props
         const { getFieldDecorator } = this.props.form
         return (
             <Form>
                 <Item>
                     {
                         getFieldDecorator('parentId', {
-                            initialValue: '0'
+                            initialValue: parentId
                         })(
                             <Select>
-                                <Option value='0'>aaa</Option>
-                                <Option value='1'>bbb</Option>
+                                <Option value='0'>一级分类</Option>
+                                {
+                                    categoryList.map(c => <Option value={c._id}>{c.name}</Option>)
+                                }
                             </Select>
                         )
                     }
@@ -36,7 +51,10 @@ class AddForm extends Component {
                 <Item>
                     {
                         getFieldDecorator('categoryName', {
-                            initialValue: ''
+                            initialValue: '',
+                            rules: [
+                                {required: true, message: '分类名称必须输入'},
+                            ],
                         })(
                             <Input placeholder='请输入分类名称'/>
                         )
