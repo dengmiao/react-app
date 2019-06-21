@@ -42,7 +42,7 @@ class AddForm extends Component {
                             <Select>
                                 <Option value='0'>一级分类</Option>
                                 {
-                                    categoryList.map(c => <Option value={c._id}>{c.name}</Option>)
+                                    categoryList.map(c => <Option value={c._id} key={c._id}>{c.name}</Option>)
                                 }
                             </Select>
                         )
