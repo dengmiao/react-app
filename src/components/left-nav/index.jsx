@@ -79,7 +79,7 @@ class LeftNav extends Component {
                 ))
 
                 // 查找一个与当前路由匹配的子item
-                const cItem = item.children.find(cItem => cItem.key === path)
+                const cItem = item.children.find(cItem => path.indexOf(cItem.key)===0)
                 // 如果存在, 说明当前item所在的子列表需要展开
                 if(cItem) {
                     this.openKey = item.key
