@@ -41,6 +41,9 @@ export const reqSearchProducts = ({pageNum, pageSize, searchName, searchType}) =
 // 更新商品状态(上架|下架)
 export const reqUpdateStatus = ({productId, status}) => ajax(BASE + '/manage/product/updateStatus', {productId, status}, 'POST')
 
+// 删除图片
+export const reqDeleteImg = (name) => ajax(BASE + '/manage/img/delete', {name}, 'POST')
+
 /*
 jsonp请求的接口函数
  */
