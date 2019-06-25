@@ -72,7 +72,7 @@ export default class ProductHome extends Component {
                 render: (product) => {
                     return (
                         <span>
-                            <LinkButton>修改</LinkButton>
+                            <LinkButton onClick={() => this.props.history.push('/product/addUpdate', product)}>修改</LinkButton>
                             {/*将product对象使用state传递给目标路由组件*/}
                             <LinkButton onClick={() => this.props.history.push('/product/detail', {product})}>详情</LinkButton>
                         </span>
@@ -151,7 +151,7 @@ export default class ProductHome extends Component {
             </span>
         )
         const extra = (
-            <Button type="primary">
+            <Button type="primary" onClick={() => this.props.history.push('/product/addUpdate')}>
                 <Icon type="plus"></Icon>
                 添加商品
             </Button>
