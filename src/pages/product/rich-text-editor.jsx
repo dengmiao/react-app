@@ -13,7 +13,7 @@ what you see is what you get
 export default class RichTextEditor extends Component {
 
     static propTypes = {
-        detail: PropTypes.array
+        detail: PropTypes.string
     }
 
     constructor(props) {
