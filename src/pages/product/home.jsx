@@ -83,6 +83,7 @@ export default class ProductHome extends Component {
     }
 
     getProductList = async (pageNum) => {
+        pageNum = pageNum || 1
         // 页码存储
         this.pageNum = pageNum
         // 显示loading
@@ -125,7 +126,7 @@ export default class ProductHome extends Component {
     }
 
     componentDidMount() {
-        this.getProductList()
+        this.getProductList(1)
     }
 
     render() {
@@ -167,6 +168,7 @@ export default class ProductHome extends Component {
                     columns={this.columns}
                     pagination={
                         {
+                            current: this.pageNum,
                             total,
                             defaultPageSize: PAGE_SIZE,
                             showQuickJumper: true,
