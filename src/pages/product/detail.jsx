@@ -24,7 +24,7 @@ export default class ProductDetail extends Component {
 
     async componentDidMount() {
         // 得到当前商品的分类id
-        const {categoryId, pCategoryId} = this.props.location.state
+        const {categoryId, pCategoryId} = this.props.location.state.product
         // 一级分类下的商品
         if(pCategoryId === '0') {
             const result = await reqCategory(categoryId)
@@ -46,16 +46,18 @@ export default class ProductDetail extends Component {
                 reqCategory(pCategoryId),
                 reqCategory(categoryId)
             ])
-            const categoryNameFirst = results[0]
-            const categoryNameSecond = results[1]
-            this.setState({categoryNameFirst, categoryNameSecond})
+            const categoryNameFirst = results[0].data.name
+            const categoryNameSecond = results[1].data.name
+            this.setState({
+                categoryNameFirst,
+                categoryNameSecond
+            })
         }
     }
 
     render() {
         // 读取携带过来的状态数据
-        const {name, desc, price, detail, imgs} = this.props.location.state
-
+        const {name, desc, price, detail, imgs} = this.props.location.state.product
         // 取出状态数据
         const {categoryNameFirst, categoryNameSecond} = this.state
 
