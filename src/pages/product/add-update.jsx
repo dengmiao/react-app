@@ -6,11 +6,12 @@ import {
     Input,
     Cascader,
     Button,
+    message,
 } from 'antd'
 import LinkButton from "../../components/link-button"
 import PicturesWall from './pictures-wall'
 import RichTextEditor from './rich-text-editor'
-import { reqCategorys } from '../../api'
+import { reqCategorys, reqAddOrUpdateProduct } from '../../api'
 
 const { Item } = Form
 const { TextArea } = Input
@@ -123,11 +124,38 @@ class ProductAddUpdate extends Component {
 
     submit = () => {
         // 进行表单验证
-        this.props.form.validateFields((err, values) => {
+        this.props.form.validateFields(async (err, values) => {
             if(!err) {
+                // 收集输入数据 封装成product对象
+                const {name, desc, price, categoryIds} = values
+                let categoryId, pCategoryId
+                if(categoryIds.length === 1) {
+                    pCategoryId = '0'
+                    categoryId = categoryIds[0]
+                } else {
+                    pCategoryId = categoryIds[0]
+                    categoryId = categoryIds[1]
+                }
                 const imgs = this.pw.current.getImgs()
                 const detail = this.editor.current.getDetail()
-                alert(`请求提交${JSON.stringify(values)}`)
+                const product = {
+                    name, desc, price, categoryId, pCategoryId, imgs, detail,
+                }
+                // 如果是新增
+                if(this.isUpdate) {
+                    product._id = this.product._id
+                }
+                // 调用接口请求函数去添加/更新
+                const result = await reqAddOrUpdateProduct(product)
+
+                if(result.status === 0) {
+                    message.success(`${this.isUpdate ? '更新' : '添加'}商品成功`)
+                    this.props.history.goBack()
+                } else {
+                    message.error(`${this.isUpdate ? '更新' : '添加'}商品失败`)
+                }
+
+                //alert(`请求提交${JSON.stringify(values)}`)
                 console.log(`图片: ${imgs}, 标签文本: ${detail}`)
             }
         })
