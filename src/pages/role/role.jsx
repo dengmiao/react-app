@@ -12,6 +12,7 @@ import AddForm from "./add-form"
 import AuthForm from "./auth-form"
 import memoryUtils from "../../utils/memoryUtils"
 import { formateDate } from '../../utils/dateUtils'
+import storageUtils from "../../utils/storageUtils"
 
 /*
 角色路由
@@ -126,10 +127,18 @@ export default class Role extends Component {
         const result = await reqUpdateRole(role)
         const roleName = role.name
         if(result.status === 0) {
-            this.setState({
-                roles: [...this.state.roles]
-            })
-            message.success(`角色\`${roleName}\`授权成功`)
+            // 如果当前更新的是自己角色的权限 强制退出
+            if(role._id === memoryUtils.user.role_id) {
+                memoryUtils.user = {}
+                storageUtils.removeItem('currUser')
+                message.info('当前用户角色已修改, 请重新登录')
+                this.props.history.replace('/login')
+            } else {
+                this.setState({
+                    roles: [...this.state.roles]
+                })
+                message.success(`角色\`${roleName}\`授权成功`)
+            }
         } else {
             message.error(`角色\`${roleName}\`授权失败`)
         }
