@@ -13,9 +13,6 @@ const BASE = ''
 // 登录
 export const reqLogin = (username, password) => ajax(BASE + '/login', {username, password}, 'POST')
 
-// 注册
-export const reqAddUser = (user) => ajax(BASE + '/manager/user/add', user, 'POST')
-
 // 获取分类列表
 export const reqCategorys = (parentId) => ajax(BASE + '/manage/category/list', {parentId})
 
@@ -58,6 +55,16 @@ export const reqAddRole = (roleName) => ajax(BASE + '/manage/role/add', {roleNam
 
 // 更新角色
 export const reqUpdateRole = (role) => ajax(BASE + '/manage/role/update', role, 'POST')
+
+// 获取所有用户
+export const reqUsers = () => ajax(BASE + '/manage/user/list')
+
+// 删除用户
+export const reqDeleteUser = (userId) => ajax(BASE + '/manage/user/delete', {userId}, 'POST')
+
+// 添加用户
+// 注册
+export const reqAddOUpdateUser = (user) => ajax(BASE + '/manage/user/' + (user._id ? 'update' : 'add'), user, 'POST')
 
 /*
 jsonp请求的接口函数
