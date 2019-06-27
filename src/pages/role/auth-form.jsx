@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import {
     Form,
@@ -14,7 +14,7 @@ const { TreeNode } = Tree
 /*
 添加分类的form组件
  */
-export default class AuthForm extends Component {
+export default class AuthForm extends PureComponent {
     constructor(props) {
         super(props)
         // 根据传入角色的menus生成初始状态
@@ -71,7 +71,7 @@ export default class AuthForm extends Component {
     }
 
     render() {
-        console.log('render()')
+        console.log('AuthForm render()')
         const {role} = this.props
         const {checkedKeys} = this.state
         // 指定Item布局的配置对象
