@@ -48,7 +48,7 @@ export default class Admin extends Component {
                             <Redirect to='/home' />
                         </Switch>
                     </Content>
-                    <Footer style={{ textAlign: 'center', color: '#ccc' }}>@copy 2019</Footer>
+                    <Footer style={{ textAlign: 'center', color: '#ccc' }}>Copyright © 2019 All rights reserved</Footer>
                 </Layout>
             </Layout>
         )
