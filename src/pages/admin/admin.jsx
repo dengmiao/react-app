@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import { Layout } from 'antd';
+import { Layout } from 'antd'
+import { connect } from 'react-redux'
 
 import LeftNav from '../../components/left-nav/index'
 import Header from '../../components/header/index'
@@ -12,17 +13,17 @@ import Role from '../role/role'
 import Bar from '../charts/bar'
 import Line from '../charts/line'
 import Pie from '../charts/pie'
-import memoryUtils from '../../utils/memoryUtils'
 
 const { Footer, Sider, Content } = Layout
 
 /*
 后台管理路由组件
  */
-export default class Admin extends Component {
+class Admin extends Component {
 
     render() {
-        const user = memoryUtils.user;
+        //const user = memoryUtils.user;
+        const user = this.props.user
         // 当前没有登录
         if(!user || !user._id) {
             // 自动跳转登录
@@ -54,3 +55,8 @@ export default class Admin extends Component {
         )
     }
 }
+
+export default connect(
+    state => ({user: state.user}),
+    {}
+)(Admin)
