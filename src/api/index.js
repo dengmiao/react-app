@@ -5,7 +5,7 @@ import jsonp from 'jsonp'
 import {message} from 'antd'
 import ajax from './ajax'
 
-const BASE = ''
+const BASE = '/api'
 
 /*export function reqLogin(username, password) {
     ajax('/login', {username, password})
