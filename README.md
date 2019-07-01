@@ -66,3 +66,21 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+###全局安装serve
+`
+npm install -g serve
+`
+###在指定端口3000端口启动
+`serve -l 3000 -s build
+`
+###nginx配置
+### # 所有请求(不包含下面请求)都转发给前台应用
+        location / {
+            proxy_pass http://localhost:3000;
+        }
+
+### # 所有以/api开头的请求转发后台应用
+        location ~/api/ {
+            proxy_pass http://localhost:5000;
+        }
