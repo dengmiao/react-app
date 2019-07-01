@@ -12,6 +12,7 @@ import {
 import LinkButton from '../../components/link-button'
 import { reqProducts, reqSearchProducts, reqUpdateStatus } from '../../api'
 import { PAGE_SIZE } from '../../utils/constants'
+import memoryUtils from "../../utils/memoryUtils"
 
 const Option = Select.Option
 
@@ -72,14 +73,32 @@ export default class ProductHome extends Component {
                 render: (product) => {
                     return (
                         <span>
-                            <LinkButton onClick={() => this.props.history.push('/product/addUpdate', product)}>修改</LinkButton>
+                            <LinkButton onClick={() => this.showUpdate(product)}>修改</LinkButton>
                             {/*将product对象使用state传递给目标路由组件*/}
-                            <LinkButton onClick={() => this.props.history.push('/product/detail', {product})}>详情</LinkButton>
+                            <LinkButton onClick={() => this.showDetail(product)}>详情</LinkButton>
                         </span>
                     )
                 }
             },
         ]
+    }
+
+    /*
+    显示修改界面
+     */
+    showUpdate = (product) => {
+        // 缓存商品对象数据 给更新组件使用
+        memoryUtils.product = product
+        this.props.history.push('/product/addUpdate')
+    }
+
+    /*
+    显示详情界面
+     */
+    showDetail = (product) => {
+        // 缓存商品对象数据 给详情组件使用
+        memoryUtils.product = product
+        this.props.history.push('/product/detail')
     }
 
     getProductList = async (pageNum) => {

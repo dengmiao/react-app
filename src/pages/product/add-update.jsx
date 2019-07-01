@@ -12,6 +12,7 @@ import LinkButton from "../../components/link-button"
 import PicturesWall from './pictures-wall'
 import RichTextEditor from './rich-text-editor'
 import { reqCategorys, reqAddOrUpdateProduct } from '../../api'
+import memoryUtils from "../../utils/memoryUtils"
 
 const { Item } = Form
 const { TextArea } = Input
@@ -166,12 +167,22 @@ class ProductAddUpdate extends Component {
     }
 
     componentWillMount() {
-        // 取出编辑按钮携带的数据
-        const product = this.props.location.state
+        // 取出编辑按钮携带的数据 hashRouter不适用
+        // const product = this.props.location.state
+        // hashRouter从内存缓存中获取
+        const product = memoryUtils.product
         // 保存是否是更新的标识
-        this.isUpdate = !!product
+        this.isUpdate = !!product._id
         // 用于修改时的默认显示
         this.product = product || {}
+    }
+
+    /*
+    组件卸载之前调用
+     */
+    componentWillUnmount() {
+        // 清除保存数据
+        memoryUtils.product = {}
     }
 
     render() {

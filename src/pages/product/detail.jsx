@@ -7,6 +7,7 @@ import {
 import LinkButton from "../../components/link-button"
 import { BASE_IMG_URL } from '../../utils/constants'
 import { reqCategory } from '../../api'
+import memoryUtils from "../../utils/memoryUtils"
 
 const Item = List.Item
 
@@ -24,7 +25,9 @@ export default class ProductDetail extends Component {
 
     async componentDidMount() {
         // 得到当前商品的分类id
-        const {categoryId, pCategoryId} = this.props.location.state.product
+        // hashRouter 不适用
+        // const {categoryId, pCategoryId} = this.props.location.state.product
+        const {categoryId, pCategoryId} = memoryUtils.product
         // 一级分类下的商品
         if(pCategoryId === '0') {
             const result = await reqCategory(categoryId)
@@ -55,9 +58,17 @@ export default class ProductDetail extends Component {
         }
     }
 
+    /*
+    组件卸载之前调用
+     */
+    componentWillUnmount() {
+        // 清除保存数据
+        memoryUtils.product = {}
+    }
+
     render() {
         // 读取携带过来的状态数据
-        const {name, desc, price, detail, imgs} = this.props.location.state.product
+        const {name, desc, price, detail, imgs} = memoryUtils.product
         // 取出状态数据
         const {categoryNameFirst, categoryNameSecond} = this.state
 
